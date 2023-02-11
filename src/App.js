@@ -19,10 +19,10 @@ function App() {
   return (
     <div className='page'>
       <section className='lists'>
-        {movieList.map((item,index)=> {
+        {movieList.map((item, index)=> {
           return(
-            <div>
-              <MovieRow key={index} title={item.title} items={item.items}/>
+            <div key={index}>
+              <MovieRow title={item.title} items={item.items}/>
             </div>
           )
         })}
