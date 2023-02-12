@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Api from './Api';
 import MovieRow from './Components/MovieRow';
+import FeaturedMovie from './Components/FeaturedMovie';
 import './App.css';
 
 function App() {
   const [movieList, setMovieList] = useState([]);
+  const[featuredData,setFeatureData] = useState(null);
 
     useEffect(() => {
       const loadAall = async () => {
@@ -12,12 +14,21 @@ function App() {
         let list = await Api.getHomeList();
         setMovieList(list)
         console.log("teste list: ", list)
+
+        //Pegando o Featured
+        let originals = list.filter(i => i.slug === 'originals');
+        let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1 ))
+        let chosen = originals[0].items.results[randomChosen];
+        console.log(" filme escolhido:" , chosen)
       }
       loadAall();
     }, [])
 
   return (
     <div className='page'>
+      {featuredData &&
+        <FeaturedMovie item={featuredData} />
+      }
       <section className='lists'>
         {movieList.map((item, index)=> {
           return(

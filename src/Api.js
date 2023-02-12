@@ -17,11 +17,6 @@ export default {
                 items: await basicFetch(`/discover/tv?with_network=213&language=pt-BR&api_key=${API_KEY}`)
             },
             {
-                slug: 'originals',
-                title: 'Originais do Netflix',
-                items: await basicFetch(`/discover/tv?with_network=213&language=pt-BR&api_key=${API_KEY}`)
-            },
-            {
                 slug: 'trending',
                 title: 'Recomendados para Você',
                 items: await basicFetch(`/trending/all/week?&language=pt-BR&api_key=${API_KEY}`)
@@ -39,7 +34,7 @@ export default {
             {
                 slug: 'comedy',
                 title: 'Comédia',
-                items: await basicFetch(`/discover/movie?with_genres=38&language=pt-BR&api_key=${API_KEY}`)
+                items: await basicFetch(`/discover/movie?with_genres=35&language=pt-BR&api_key=${API_KEY}`)
             },
             {
                 slug: 'horror',
