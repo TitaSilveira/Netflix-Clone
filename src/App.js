@@ -66,6 +66,7 @@ function App() {
       
       <footer>
          Feito com <span role="img" aria-label="coração">❤️</span> por Cintia Silveira. <br />
+         Baseado no curso B7web. <br />
          Direitos de imagem para Netflix. <br />
          Dados extraídos do site themoviedb.org.
       </footer>

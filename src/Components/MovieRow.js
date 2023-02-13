@@ -3,7 +3,7 @@ import "./MovieRow.css";
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
 
 export default({title, items}) => {
-    const[scrollX, setScrollX] = useState(-400)
+    const[scrollX, setScrollX] = useState(0)
 
     const handleLeftArrow = () => {
         let x = scrollX + Math.round(window.innerWidth / 2)
