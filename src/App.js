@@ -39,7 +39,8 @@ function App() {
         }
       }
       window.addEventListener('scroll', scrollListener)
-      
+
+      // Executará o código abaixo quando o componente for desmontado
       return () => {
         window.removeEventListener('scroll', scrollListener)
       }
@@ -48,9 +49,11 @@ function App() {
   return (
     <div className='page'>
       <Header black={blackHeader} />
+
       {featuredData &&
         <FeaturedMovie item={featuredData} />
       }
+
       <section className='lists'>
         {movieList.map((item, index)=> {
           return(
@@ -60,6 +63,12 @@ function App() {
           )
         })}
       </section>
+      
+      <footer>
+         Feito com <span role="img" aria-label="coração">❤️</span> por Cintia Silveira. <br />
+         Direitos de imagem para Netflix. <br />
+         Dados extraídos do site themoviedb.org.
+      </footer>
       
     </div>
 
