@@ -12,16 +12,18 @@ function App() {
       const loadAall = async () => {
         //Pegando a lista total
         let list = await Api.getHomeList();
+        console.log('lista aqui: ', list)
         setMovieList(list)
-        console.log("teste list: ", list)
 
         //Pegando o Featured
         let originals = list.filter(i => i.slug === 'originals');
         let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1 ))
         let chosen = originals[0].items.results[randomChosen];
-        console.log(" filme escolhido:" , chosen)
+        let chosenInfo = await Api.getMovieInfo(chosen.id, 'tv')
+        setFeatureData(chosenInfo)
       }
       loadAall();
+      
     }, [])
 
   return (
