@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import "./MovieRow.css";
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
+import DetailsFilm from "./DetailsFilm";
 
 export default({title, items}) => {
     const[scrollX, setScrollX] = useState(0)
-
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+  
+    const handleItemClick = (item) => {
+      setSelectedItem(item);
+      setIsModalVisible(true);
+    }
+    
     const handleLeftArrow = () => {
         let x = scrollX + Math.round(window.innerWidth / 2)
         if( x > 0){
@@ -38,7 +46,7 @@ export default({title, items}) => {
             }}>
             {items.results.length > 0 && items.results.map((item, key) => {
                 return(
-                    <div className="movieRow-item">
+                    <div className="movieRow-item" onClick={() => handleItemClick(item)}>
                         <img 
                         key={key}
                         src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} 
@@ -47,6 +55,9 @@ export default({title, items}) => {
                     </div>
                 )
             })}
+               {isModalVisible && (
+                    <DetailsFilm selectedItem={selectedItem} setIsModalVisible={setIsModalVisible} />
+                )}
             </div>
         </div>
     </div>
