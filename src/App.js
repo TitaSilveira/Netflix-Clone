@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Api from './Api';
 import MovieRow from './Components/MovieRow';
 import FeaturedMovie from './Components/FeaturedMovie';
-import Header from  './Components/Header'
+import Header from  './Components/Header';
+import ModalDetails from './Components/ModalDetails';
 import './App.css';
 
 function App() {
   const [movieList, setMovieList] = useState([]);
   const[featuredData,setFeatureData] = useState(null);
-  const[blackHeader, setBlackHeader] = useState(false)
+  const[blackHeader, setBlackHeader] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  
 
     useEffect(() => {
       const loadAall = async () => {
@@ -23,11 +27,12 @@ function App() {
         let chosen = originals[0].items.results[randomChosen];
         let chosenInfo = await Api.getMovieInfo(chosen.id, 'tv')
         setFeatureData(chosenInfo)
+        console.log(featuredData)
       }
       loadAall();
 
     }, [])
-
+    
     // Monitorar o Scroll para alteração do Header
     useEffect(() => {
       const scrollListener = () => {
@@ -46,6 +51,11 @@ function App() {
       }
     }, [])
 
+    const handleItemClick = (item) => {
+      setSelectedItem(item);
+      setIsModalVisible(true);
+    }
+
   return (
     <div className='page'>
       <Header black={blackHeader} />
@@ -54,16 +64,21 @@ function App() {
         <FeaturedMovie item={featuredData} />
       }
 
+
       <section className='lists'>
         {movieList.map((item, index)=> {
           return(
             <div key={index}>
-              <MovieRow title={item.title} items={item.items}/>
+              <MovieRow title={item.title} items={item.items} handleItemClick={handleItemClick} />
             </div>
           )
         })}
       </section>
-      
+
+      {isModalVisible && (
+        <ModalDetails Item={selectedItem} onClose={() => setIsModalVisible(false)} />
+      )}
+
       <footer>
          Feito com <span role="img" aria-label="coração">❤️</span> por Cintia Silveira. <br />
          Baseado no curso B7web. <br />

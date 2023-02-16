@@ -68,5 +68,22 @@ export default {
             }
             return info;
         }
+    },
+    getVideo: async(movieId, type) => {
+        let videos = {};
+
+        if(movieId){
+            switch(type){
+                case 'movie':
+                    videos = await basicFetch(`/movie/${movieId}/vídeos?language=pt-BR&api_key=${API_KEY}`)
+                    break;
+                case 'tv':
+                    videos = await basicFetch(`/tv/${movieId}/vídeos?language=pt-BR&api_key=${API_KEY}`)
+                    break;
+                default:
+                    videos = null;
+            }
+            return videos;
+        }
     }
 }

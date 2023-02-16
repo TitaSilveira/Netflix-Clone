@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import "./MovieRow.css";
 import { MdNavigateBefore, MdNavigateNext } from 'react-icons/md';
-import DetailsFilm from "./DetailsFilm";
 
-export default({title, items}) => {
+
+export default({title, items, handleItemClick}) => {
     const[scrollX, setScrollX] = useState(0)
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [selectedItem, setSelectedItem] = useState(null);
-  
-    const handleItemClick = (item) => {
-      setSelectedItem(item);
-      setIsModalVisible(true);
-    }
+    
     
     const handleLeftArrow = () => {
         let x = scrollX + Math.round(window.innerWidth / 2)
@@ -55,9 +49,6 @@ export default({title, items}) => {
                     </div>
                 )
             })}
-               {isModalVisible && (
-                    <DetailsFilm selectedItem={selectedItem} setIsModalVisible={setIsModalVisible} />
-                )}
             </div>
         </div>
     </div>
