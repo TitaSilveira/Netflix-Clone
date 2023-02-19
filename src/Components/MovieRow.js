@@ -23,6 +23,8 @@ export default({title, items, handleItemClick}) => {
         }
         setScrollX(x);
     }
+
+    
     
  return(
     <div className="movieRow">

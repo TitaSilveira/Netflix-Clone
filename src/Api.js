@@ -4,6 +4,8 @@ const API_BASE = 'https://api.themoviedb.org/3';
 const basicFetch = async (endpoint) => {
     const req = await fetch(`${API_BASE}${endpoint}`);
     const json = await req.json();
+    // console.clear()
+    console.log("JSON BASIC FETCH: ", json)
     return json;
 }
 
@@ -54,6 +56,8 @@ export default {
     },
     getMovieInfo: async(movieId, type) => {
         let info = {};
+        // console.clear()
+        console.log("OQ É ISSO: ",type)
 
         if(movieId){
             switch(type){
@@ -69,21 +73,4 @@ export default {
             return info;
         }
     },
-    getVideo: async(movieId, type) => {
-        let videos = {};
-
-        if(movieId){
-            switch(type){
-                case 'movie':
-                    videos = await basicFetch(`/movie/${movieId}/vídeos?language=pt-BR&api_key=${API_KEY}`)
-                    break;
-                case 'tv':
-                    videos = await basicFetch(`/tv/${movieId}/vídeos?language=pt-BR&api_key=${API_KEY}`)
-                    break;
-                default:
-                    videos = null;
-            }
-            return videos;
-        }
-    }
 }

@@ -8,28 +8,28 @@ import './App.css';
 
 function App() {
   const [movieList, setMovieList] = useState([]);
-  const[featuredData,setFeatureData] = useState(null);
+  const[featuredData,setFeaturedData] = useState(null);
   const[blackHeader, setBlackHeader] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   
 
     useEffect(() => {
-      const loadAall = async () => {
+      const loadAll = async () => {
         //Pegando a lista total
         let list = await Api.getHomeList();
-        console.log('lista aqui: ', list)
+        console.log('lista aqui loadAll: ', list)
         setMovieList(list)
 
         //Pegando o Featured
         let originals = list.filter(i => i.slug === 'originals');
         let randomChosen = Math.floor(Math.random() * (originals[0].items.results.length - 1 ))
         let chosen = originals[0].items.results[randomChosen];
+        console.log("CHOSEN:", chosen)
         let chosenInfo = await Api.getMovieInfo(chosen.id, 'tv')
-        setFeatureData(chosenInfo)
-        console.log(featuredData)
+        setFeaturedData(chosenInfo)
       }
-      loadAall();
+      loadAll();
 
     }, [])
     
@@ -51,10 +51,20 @@ function App() {
       }
     }, [])
 
-    const handleItemClick = (item) => {
-      setSelectedItem(item);
+
+    const handleItemClick = async (item) => {
+      console.clear()
+      console.log('item aqui handleItemClick:', item)
+      console.log("media_type DO ITEM: ", item.media_type)
+      
+      let infoItem = await Api.getMovieInfo(item.id, ['movie','tv'])
+      setSelectedItem(infoItem);
       setIsModalVisible(true);
     }
+
+    useEffect(() => {
+      handleItemClick()
+    }, [])
 
   return (
     <div className='page'>
@@ -66,7 +76,8 @@ function App() {
 
 
       <section className='lists'>
-        {movieList.map((item, index)=> {
+        {movieList
+        .map((item, index)=> {
           return(
             <div key={index}>
               <MovieRow title={item.title} items={item.items} handleItemClick={handleItemClick} />
