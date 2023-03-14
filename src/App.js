@@ -3,16 +3,12 @@ import Api from './Api';
 import MovieRow from './Components/MovieRow';
 import FeaturedMovie from './Components/FeaturedMovie';
 import Header from  './Components/Header';
-import ModalDetails from './Components/ModalDetails';
 import './App.css';
 
 function App() {
   const [movieList, setMovieList] = useState([]);
   const[featuredData,setFeaturedData] = useState(null);
   const[blackHeader, setBlackHeader] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  
 
     useEffect(() => {
       const loadAll = async () => {
@@ -51,21 +47,6 @@ function App() {
       }
     }, [])
 
-
-    const handleItemClick = async (item) => {
-      console.clear()
-      console.log('item aqui handleItemClick:', item)
-      console.log("media_type DO ITEM: ", item.media_type)
-      
-      let infoItem = await Api.getMovieInfo(item.id, ['movie','tv'])
-      setSelectedItem(infoItem);
-      setIsModalVisible(true);
-    }
-
-    useEffect(() => {
-      handleItemClick()
-    }, [])
-
   return (
     <div className='page'>
       <Header black={blackHeader} />
@@ -80,15 +61,11 @@ function App() {
         .map((item, index)=> {
           return(
             <div key={index}>
-              <MovieRow title={item.title} items={item.items} handleItemClick={handleItemClick} />
+              <MovieRow title={item.title} items={item.items} />
             </div>
           )
         })}
       </section>
-
-      {isModalVisible && (
-        <ModalDetails Item={selectedItem} onClose={() => setIsModalVisible(false)} />
-      )}
 
       <footer>
          Feito com <span role="img" aria-label="coração">❤️</span> por Cintia Silveira. <br />
